@@ -1,0 +1,24 @@
+{
+    "GamePath": "E:\\GAME\\steamapps\\common\\dota 2 beta",
+    "Time": [
+        "0:00",
+        "5:00",
+        "10:00",
+        "15:00",
+        "20:00",
+        "25:00"
+    ],
+    "unXP": "*2",
+    "unGold": "*2",
+    "unTowerHp": "*1",
+    "unTowerRegen": "=5",
+    "unFortHp": "*1",
+    "unFortRegen": "=25",
+    "shardCD": "=0.0",
+    "eyeMax": "=10",
+    "eyeInit": "=5",
+    "eyeCD": "=60",
+    "eye2Max": "=10",
+    "eye2Init": "=5",
+    "eye2CD": "=60"
+}
