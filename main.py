@@ -3,15 +3,17 @@ import os
 import subprocess
 import time
 
-from PyQt5.QtWidgets import QApplication, QWidget, QFileDialog
+from PyQt5.QtWidgets import QApplication, QWidget, QFileDialog, QListView
+from PyQt5.QtCore import QStringListModel
 
 from NpcItem import NpcItem
 from NpcNeutralItem import NpcNeutralItem
 from NpcUnit import NpcUnit
 from GeneralLua import GeneralLua
+from HeroNameDict import HeroNameDict
 from untitled import Ui_Form
 
-version = '0.0.1'
+version = '0.0.2'
 
 
 class MainWindow(QWidget, Ui_Form):
@@ -24,6 +26,7 @@ class MainWindow(QWidget, Ui_Form):
             self.config = {}
         self.path = os.path.dirname(os.path.abspath(__file__))
         self.vpk = os.path.join(self.path, 'vpk', 'vpk.bat')
+        self.heroes = os.path.join(self.path, 'npc', 'heroes')
         self.ni = os.path.join(self.path, 'npc', 'neutral_items.txt')
         self.ni_out = os.path.join(self.path, 'vpk', 'pak01_dir', 'scripts', 'npc', 'neutral_items.txt')
         self.un = os.path.join(self.path, 'npc', 'npc_units.txt')
@@ -35,6 +38,7 @@ class MainWindow(QWidget, Ui_Form):
         self.UN = NpcUnit(self.un)
         self.IT = NpcItem(self.it)
         self.LUA = GeneralLua(self.lua)
+        self.mod = QStringListModel()
         self.setupUi(self)
         self.Init()
 
@@ -51,6 +55,9 @@ class MainWindow(QWidget, Ui_Form):
         self.itReset.clicked.connect(self.ResetItem)
         self.luaWrite.clicked.connect(self.WriteLua)
         self.VPK.clicked.connect(self.Vpk)
+        self.mod.setStringList([f'{k:50}{v}' for k, v in HeroNameDict.EN_CN.items()])
+        self.heroView.setModel(self.mod)
+        self.heroView.setEditTriggers(QListView.NoEditTriggers)  # 禁止编辑
         # 读取配置
         try:
             self.gamePath.setText(self.config['GamePath'])
@@ -162,7 +169,7 @@ class MainWindow(QWidget, Ui_Form):
         self.config['GamePath'] = self.gamePath.text()
         with open('config.json', 'w', encoding='utf-8') as f:
             json.dump(self.config, f, ensure_ascii=False, indent=4)
-        self.status.setText(f'配置已保存')
+        self.status.setText(f'路径已保存')
 
     def Browse(self):
         path = QFileDialog.getExistingDirectory(self, "选择文件夹", "")

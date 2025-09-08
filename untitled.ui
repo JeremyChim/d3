@@ -13,6 +13,9 @@
   <property name="windowTitle">
    <string>Form</string>
   </property>
+  <property name="styleSheet">
+   <string notr="true">font: 9pt &quot;JetBrains Mono&quot;;</string>
+  </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
     <widget class="QTabWidget" name="tabWidget">
@@ -978,7 +981,7 @@
            </property>
            <layout class="QVBoxLayout" name="verticalLayout_5">
             <item>
-             <widget class="QListView" name="listView_2"/>
+             <widget class="QListView" name="heroView"/>
             </item>
             <item>
              <widget class="QLineEdit" name="lineEdit">
@@ -1000,7 +1003,7 @@
            </property>
            <layout class="QVBoxLayout" name="verticalLayout_4">
             <item>
-             <widget class="QListView" name="listView_3"/>
+             <widget class="QListView" name="banView"/>
             </item>
             <item>
              <widget class="QLineEdit" name="lineEdit_23">
