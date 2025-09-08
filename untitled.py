@@ -630,5 +630,5 @@ class Ui_Form(object):
         self.browse.setText(_translate("Form", "浏览"))
         self.gamePath.setPlaceholderText(_translate("Form", "...\\steamapps\\common\\dota 2 beta"))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_2), _translate("Form", "配置"))
-        self.VPK.setText(_translate("Form", "生成VPK"))
+        self.VPK.setText(_translate("Form", "写入VPK"))
         self.status.setText(_translate("Form", "状态信息"))

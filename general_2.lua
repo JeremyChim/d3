@@ -113,10 +113,10 @@ Customize.Force_Group_Push_Level = 3
 -- Note: these settings below will override the pre-defind settings in Fretbots folder.
 Customize.Fretbots = {
     -- Default difficulty, a number between: [0, 10]
-    Default_Difficulty = 10
+    Default_Difficulty = 10,
 
     -- Default ally bots bonus scale comparing to enemy bots, a number between: [0, 1]
-    Default_Ally_Scale = 0
+    Default_Ally_Scale = 0,
 
     -- Set whether or not allowing the team to vote for difficulty. If false, will directly apply the default difficulty.
     Allow_To_Vote = true,

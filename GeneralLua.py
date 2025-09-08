@@ -8,7 +8,7 @@ class GeneralLua:
         lines = self.lines.copy()
         for i, line in enumerate(self.lines):
             if option in line:
-                ov = line.split('=')[-1].replace(' ', '').replace('\n', '')
+                ov = line.split(' = ')[-1].replace(',','').replace('\n', '')
                 line2 = line.replace(ov, value)
                 lines[i] = line2
                 print(i + 1, line2, end='')
