@@ -30,6 +30,6 @@ class NpcNeutralItem:
 
 
 if __name__ == '__main__':
-    ni = NpcNeutralItem(r'C:\Users\Jeremy\Desktop\d3\npc\neutral_items.txt')
-    ni.UpdateNeutralItem(['25:00', '0:00', '5:00', '10:00', '15:00', '20:00'])
-    ni.Write(r'C:\Users\Jeremy\Desktop\d3\vpk\pak01_dir\scripts\npc\neutral_items.txt')
+    NI = NpcNeutralItem(r'C:\Users\Jeremy\Desktop\d3\npc\neutral_items.txt')
+    NI.UpdateNeutralItem(['25:00', '0:00', '5:00', '10:00', '15:00', '20:00'])
+    NI.Write(r'C:\Users\Jeremy\Desktop\d3\vpk\pak01_dir\scripts\npc\neutral_items.txt')

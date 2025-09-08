@@ -44,6 +44,6 @@ class NpcItem:
 
 
 if __name__ == '__main__':
-    it = NpcItem(r'C:\Users\Jeremy\Desktop\d3\npc\items.txt')
-    it.UpdateItem('item_aghanims_shard', {"ItemInitialStockTime": "=0.0", "ItemInitialStockTimeTurbo": "=0.0"})
-    it.Write(r'C:\Users\Jeremy\Desktop\d3\vpk\pak01_dir\scripts\npc\items.txt')
+    IT = NpcItem(r'C:\Users\Jeremy\Desktop\d3\npc\items.txt')
+    IT.UpdateItem('item_aghanims_shard', {"ItemInitialStockTime": "=0.0", "ItemInitialStockTimeTurbo": "=0.0"})
+    IT.Write(r'C:\Users\Jeremy\Desktop\d3\vpk\pak01_dir\scripts\npc\items.txt')

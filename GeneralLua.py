@@ -75,16 +75,17 @@ class GeneralLua:
 
 
 if __name__ == '__main__':
-    gl = GeneralLua(r'C:\Users\Jeremy\Desktop\d3\general.lua')
+    LUA = GeneralLua(r'C:\Users\Jeremy\Desktop\d3\general.lua')
 
-    gl.UndateOption('Customize.Localization', '"zh"')
-    gl.UndateOption('Customize.Weak_Hero_Cap', '0')
-    gl.UndateOption('Customize.Allow_Trash_Talk', 'false')
-    gl.UndateOption('Customize.Force_Group_Push_Level', '3')
-    gl.UndateOption('Default_Difficulty', '10')
-    gl.UndateOption('Default_Ally_Scale', '0')
+    LUA.UndateOption('Customize.Localization', '"zh"')
+    LUA.UndateOption('Customize.Weak_Hero_Cap', '0')
+    LUA.UndateOption('Customize.Allow_Trash_Talk', 'false')
+    LUA.UndateOption('Customize.Force_Group_Push_Level', '3')
+    LUA.UndateOption('Default_Difficulty', '10')
+    LUA.UndateOption('Default_Ally_Scale', '0')
 
-    gl.UpdateBanHero(['BanHero1', 'BanHero2', 'BanHero3'])
-    gl.UpdateFriend(['Friend1', 'Friend2', 'Friend3', 'Friend4'])
-    gl.UpdateEnemy(['Enemy1', 'Enemy2', 'Enemy3', 'Enemy4', 'Enemy5'])
-    gl.Write(r'C:\Users\Jeremy\Desktop\d3\general_2.lua')
+    LUA.UpdateBanHero(['BanHero1', 'BanHero2', 'BanHero3'])
+    LUA.UpdateFriend(['Friend1', 'Friend2', 'Friend3', 'Friend4'])
+    LUA.UpdateEnemy(['Enemy1', 'Enemy2', 'Enemy3', 'Enemy4', 'Enemy5'])
+
+    LUA.Write(r'C:\Users\Jeremy\Desktop\d3\general_2.lua')

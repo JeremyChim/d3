@@ -97,9 +97,9 @@ class NpcUnit:
 
 
 if __name__ == '__main__':
-    un = NpcUnit(r'C:\Users\Jeremy\Desktop\d3\npc\npc_units.txt')
-    un.UpdateXP('2')
-    un.UpdateGold('2')
-    un.UpdateTowerHpAndRegen('1', '1')
-    un.UpdateFortHpAndRegen('1', '1')
-    un.Write(r'C:\Users\Jeremy\Desktop\d3\vpk\pak01_dir\scripts\npc\npc_units.txt')
+    UN = NpcUnit(r'C:\Users\Jeremy\Desktop\d3\npc\npc_units.txt')
+    UN.UpdateXP('2')
+    UN.UpdateGold('2')
+    UN.UpdateTowerHpAndRegen('1', '1')
+    UN.UpdateFortHpAndRegen('1', '1')
+    UN.Write(r'C:\Users\Jeremy\Desktop\d3\vpk\pak01_dir\scripts\npc\npc_units.txt')

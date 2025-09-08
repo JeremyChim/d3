@@ -8,6 +8,7 @@ from PyQt5.QtWidgets import QApplication, QWidget, QFileDialog
 from NpcItem import NpcItem
 from NpcNeutralItem import NpcNeutralItem
 from NpcUnit import NpcUnit
+from GeneralLua import GeneralLua
 from untitled import Ui_Form
 
 version = '0.0.1'
@@ -29,9 +30,11 @@ class MainWindow(QWidget, Ui_Form):
         self.un_out = os.path.join(self.path, 'vpk', 'pak01_dir', 'scripts', 'npc', 'npc_units.txt')
         self.it = os.path.join(self.path, 'npc', 'items.txt')
         self.it_out = os.path.join(self.path, 'vpk', 'pak01_dir', 'scripts', 'npc', 'items.txt')
+        self.lua = os.path.join(self.path, 'general.lua')
         self.NI = NpcNeutralItem(self.ni)
         self.UN = NpcUnit(self.un)
         self.IT = NpcItem(self.it)
+        self.LUA = GeneralLua(self.lua)
         self.setupUi(self)
         self.Init()
 
@@ -46,6 +49,7 @@ class MainWindow(QWidget, Ui_Form):
         self.unReset.clicked.connect(self.ResetUn)
         self.itApply.clicked.connect(self.UpdateItem)
         self.itReset.clicked.connect(self.ResetItem)
+        self.luaWrite.clicked.connect(self.WriteLua)
         self.VPK.clicked.connect(self.Vpk)
         # 读取配置
         try:
@@ -96,6 +100,19 @@ class MainWindow(QWidget, Ui_Form):
         self.config['eye2CD'] = self.eye2CD.text()
         with open('config.json', 'w', encoding='utf-8') as f:
             json.dump(self.config, f, ensure_ascii=False, indent=4)
+
+    def WriteLua(self):
+        self.LUA.UndateOption('Customize.Localization', self.Localization.text())
+        self.LUA.UndateOption('Customize.Weak_Hero_Cap', self.Weak_Hero_Cap.text())
+        self.LUA.UndateOption('Customize.Allow_Trash_Talk', self.Allow_Trash_Talk.text())
+        self.LUA.UndateOption('Customize.Force_Group_Push_Level', self.Force_Group_Push_Level.text())
+        self.LUA.UndateOption('Default_Difficulty', self.Default_Difficulty.text())
+        self.LUA.UndateOption('Default_Ally_Scale', self.Default_Ally_Scale.text())
+        self.LUA.UpdateBanHero(['BanHero1', 'BanHero2', 'BanHero3'])
+        self.LUA.UpdateFriend(['Friend1', 'Friend2', 'Friend3', 'Friend4'])
+        self.LUA.UpdateEnemy(['Enemy1', 'Enemy2', 'Enemy3', 'Enemy4', 'Enemy5'])
+        self.LUA.Write(r'C:\Users\Jeremy\Desktop\d3\general_2.lua')
+        self.status.setText(f'阵容数据已写入')
 
     def UpdateItem(self):
         self.IT.UpdateItem('item_aghanims_shard', {"ItemInitialStockTime": self.shardCD.text()})

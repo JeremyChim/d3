@@ -11,14 +11,14 @@
     "unXP": "*2",
     "unGold": "*2",
     "unTowerHp": "*1",
-    "unTowerRegen": "=5",
+    "unTowerRegen": "*1",
     "unFortHp": "*1",
-    "unFortRegen": "=25",
-    "shardCD": "=0.0",
-    "eyeMax": "=10",
-    "eyeInit": "=5",
-    "eyeCD": "=60",
-    "eye2Max": "=10",
-    "eye2Init": "=5",
-    "eye2CD": "=60"
+    "unFortRegen": "*1",
+    "shardCD": "=990.0",
+    "eyeMax": "=4",
+    "eyeInit": "=2",
+    "eyeCD": "=135.0",
+    "eye2Max": "=8",
+    "eye2Init": "=3",
+    "eye2CD": "=70"
 }
