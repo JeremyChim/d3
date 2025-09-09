@@ -1,0 +1,44 @@
+{
+    "GamePath": "",
+    "Time": [
+        "0:00",
+        "5:00",
+        "10:00",
+        "15:00",
+        "20:00",
+        "25:00"
+    ],
+    "unXP": "*2",
+    "unGold": "*2",
+    "unTowerHp": "*1",
+    "unTowerRegen": "*1",
+    "unFortHp": "*1",
+    "unFortRegen": "*1",
+    "shardCD": "=990.0",
+    "eyeMax": "=4",
+    "eyeInit": "=2",
+    "eyeCD": "=135.0",
+    "eye2Max": "=8",
+    "eye2Init": "=3",
+    "eye2CD": "=70",
+    "Localization": "\"zh\"",
+    "Weak_Hero_Cap": "0",
+    "Allow_Trash_Talk": "false",
+    "Force_Group_Push_Level": "3",
+    "Default_Difficulty": "10",
+    "Default_Ally_Scale": "0",
+    "BanList": [
+        "abaddon"
+    ],
+    "Team": [
+        "",
+        "axe",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        ""
+    ]
+}
