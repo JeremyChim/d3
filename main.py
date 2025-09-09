@@ -10,15 +10,16 @@ from NpcItem import NpcItem
 from NpcNeutralItem import NpcNeutralItem
 from NpcUnit import NpcUnit
 from GeneralLua import GeneralLua
-from HeroNameDict import HeroNameDict
+from HeroNameDict import *
 from untitled import Ui_Form
 
-version = '0.0.2'
+version = '0.0.3'
 
 
 class MainWindow(QWidget, Ui_Form):
     def __init__(self):
         super().__init__()
+        self.setupUi(self)
         if os.path.exists('config.json'):
             with open('config.json', 'r', encoding='utf-8') as f:
                 self.config = json.load(f)
@@ -34,15 +35,48 @@ class MainWindow(QWidget, Ui_Form):
         self.it = os.path.join(self.path, 'npc', 'items.txt')
         self.it_out = os.path.join(self.path, 'vpk', 'pak01_dir', 'scripts', 'npc', 'items.txt')
         self.lua = os.path.join(self.path, 'general.lua')
+        self.lua_out = os.path.join(self.path, 'general_2.lua')
         self.NI = NpcNeutralItem(self.ni)
         self.UN = NpcUnit(self.un)
         self.IT = NpcItem(self.it)
         self.LUA = GeneralLua(self.lua)
-        self.mod = QStringListModel()
-        self.setupUi(self)
+        self.HeroMod = QStringListModel()
+        self.BanMod = QStringListModel()
+        self.BanList = []
+        self.Team = []
         self.Init()
 
     def Init(self):
+        # 读取配置
+        self.gamePath.setText(self.config.get('GamePath')) if self.config.get('GamePath') else None
+        self.ni1.setText(self.config.get('Time')[0]) if self.config.get('Time') and len(self.config.get('Time')) > 0 else None
+        self.ni2.setText(self.config.get('Time')[1]) if self.config.get('Time') and len(self.config.get('Time')) > 1 else None
+        self.ni3.setText(self.config.get('Time')[2]) if self.config.get('Time') and len(self.config.get('Time')) > 2 else None
+        self.ni4.setText(self.config.get('Time')[3]) if self.config.get('Time') and len(self.config.get('Time')) > 3 else None
+        self.ni5.setText(self.config.get('Time')[4]) if self.config.get('Time') and len(self.config.get('Time')) > 4 else None
+        self.ni6.setText(self.config.get('Time')[5]) if self.config.get('Time') and len(self.config.get('Time')) > 5 else None
+        self.unXP.setText(self.config.get('unXP')) if self.config.get('unXP') else None
+        self.unGold.setText(self.config.get('unGold')) if self.config.get('unGold') else None
+        self.unTowerHp.setText(self.config.get('unTowerHp')) if self.config.get('unTowerHp') else None
+        self.unTowerRegen.setText(self.config.get('unTowerRegen')) if self.config.get('unTowerRegen') else None
+        self.unFortHp.setText(self.config.get('unFortHp')) if self.config.get('unFortHp') else None
+        self.unFortRegen.setText(self.config.get('unFortRegen')) if self.config.get('unFortRegen') else None
+        self.shardCD.setText(self.config.get('shardCD')) if self.config.get('shardCD') else None
+        self.eyeMax.setText(self.config.get('eyeMax')) if self.config.get('eyeMax') else None
+        self.eyeInit.setText(self.config.get('eyeInit')) if self.config.get('eyeInit') else None
+        self.eye2Max.setText(self.config.get('eye2Max')) if self.config.get('eye2Max') else None
+        self.eye2Init.setText(self.config.get('eye2Init')) if self.config.get('eye2Init') else None
+        self.eyeCD.setText(self.config.get('eyeCD')) if self.config.get('eyeCD') else None
+        self.eye2CD.setText(self.config.get('eye2CD')) if self.config.get('eye2CD') else None
+        self.Localization.setText(self.config.get('Localization')) if self.config.get('Localization') else None
+        self.Weak_Hero_Cap.setText(self.config.get('Weak_Hero_Cap')) if self.config.get('Weak_Hero_Cap') else None
+        self.Allow_Trash_Talk.setText(self.config.get('Allow_Trash_Talk')) if self.config.get('Allow_Trash_Talk') else None
+        self.Force_Group_Push_Level.setText(self.config.get('Force_Group_Push_Level')) if self.config.get('Force_Group_Push_Level') else None
+        self.Default_Difficulty.setText(self.config.get('Default_Difficulty')) if self.config.get('Default_Difficulty') else None
+        self.Default_Ally_Scale.setText(self.config.get('Default_Ally_Scale')) if self.config.get('Default_Ally_Scale') else None
+        self.BanList = self.config.get('BanList') if self.config.get('BanList') else []
+        self.Team = self.config.get('Team') if self.config.get('Team') else []
+        # 控件配置
         self.setWindowTitle('DOTA修改工具')
         self.status.setText(f'当前版本：{version}')
         self.niApply.clicked.connect(self.UpdateNI)
@@ -53,45 +87,25 @@ class MainWindow(QWidget, Ui_Form):
         self.unReset.clicked.connect(self.ResetUn)
         self.itApply.clicked.connect(self.UpdateItem)
         self.itReset.clicked.connect(self.ResetItem)
-        self.luaWrite.clicked.connect(self.WriteLua)
+        self.luaWrite.clicked.connect(self.WriteLuaConfig)
         self.VPK.clicked.connect(self.Vpk)
-        self.mod.setStringList([f'{k:50}{v}' for k, v in HeroNameDict.EN_CN.items()])
-        self.heroView.setModel(self.mod)
+        self.heroView.doubleClicked.connect(self.DoubleClickedHeroView)
+        self.banView.doubleClicked.connect(self.DoubleClickedBanView)
+        self.HeroMod.setStringList([f'{en:50}{cn}' for en, cn in EN_CN.items()])
+        self.heroView.setModel(self.HeroMod)
         self.heroView.setEditTriggers(QListView.NoEditTriggers)  # 禁止编辑
-        # 读取配置
-        try:
-            self.gamePath.setText(self.config['GamePath'])
-            self.ni1.setText(self.config['Time'][0])
-            self.ni2.setText(self.config['Time'][1])
-            self.ni3.setText(self.config['Time'][2])
-            self.ni4.setText(self.config['Time'][3])
-            self.ni5.setText(self.config['Time'][4])
-            self.ni6.setText(self.config['Time'][5])
-            self.unXP.setText(self.config['unXP'])
-            self.unGold.setText(self.config['unGold'])
-            self.unTowerHp.setText(self.config['unTowerHp'])
-            self.unTowerRegen.setText(self.config['unTowerRegen'])
-            self.unFortHp.setText(self.config['unFortHp'])
-            self.unFortRegen.setText(self.config['unFortRegen'])
-            self.shardCD.setText(self.config['shardCD'])
-            self.eyeMax.setText(self.config['eyeMax'])
-            self.eyeInit.setText(self.config['eyeInit'])
-            self.eye2Max.setText(self.config['eye2Max'])
-            self.eye2Init.setText(self.config['eye2Init'])
-            self.eyeCD.setText(self.config['eyeCD'])
-            self.eye2CD.setText(self.config['eye2CD'])
-        except Exception as e:
-            self.status.setText(f'配置文件错误：{e}')
+        self.BanMod.setStringList([f'{en:50}{EN_CN.get(en)}' for en in self.BanList])
+        self.banView.setModel(self.BanMod)
+        self.banView.setEditTriggers(QListView.NoEditTriggers)  # 禁止编辑
+        self.BtnList = [self.Friend1, self.Friend2, self.Friend3, self.Friend4, self.Enemy1, self.Enemy2, self.Enemy3, self.Enemy4, self.Enemy5]
+        [Btn.clicked.connect(lambda checked, btn=Btn: self.AddTeam(btn)) for Btn in self.BtnList]  # 这里会传两个参数，checked是布尔值参数（表示按钮是否被选中），b是按钮对象
+        [Btn.setText(EN_CN.get(self.Team[i])) for i, Btn in enumerate(self.BtnList)] if self.Team else None
+        self.TeamReset.clicked.connect(self.ResetTeam)
+        self.luaRead.clicked.connect(self.ReadLuaConfig)
 
     def closeEvent(self, event):
         self.config['GamePath'] = self.gamePath.text()
-        times = [self.ni1.text(),
-                 self.ni2.text(),
-                 self.ni3.text(),
-                 self.ni4.text(),
-                 self.ni5.text(),
-                 self.ni6.text()]
-        self.config['Time'] = times
+        self.config['Time'] = [self.ni1.text(), self.ni2.text(), self.ni3.text(), self.ni4.text(), self.ni5.text(), self.ni6.text()]
         self.config['unXP'] = self.unXP.text()
         self.config['unGold'] = self.unGold.text()
         self.config['unTowerHp'] = self.unTowerHp.text()
@@ -105,20 +119,69 @@ class MainWindow(QWidget, Ui_Form):
         self.config['eye2Max'] = self.eye2Max.text()
         self.config['eye2Init'] = self.eye2Init.text()
         self.config['eye2CD'] = self.eye2CD.text()
+        self.config['Localization'] = self.Localization.text()
+        self.config['Weak_Hero_Cap'] = self.Weak_Hero_Cap.text()
+        self.config['Allow_Trash_Talk'] = self.Allow_Trash_Talk.text()
+        self.config['Force_Group_Push_Level'] = self.Force_Group_Push_Level.text()
+        self.config['Default_Difficulty'] = self.Default_Difficulty.text()
+        self.config['Default_Ally_Scale'] = self.Default_Ally_Scale.text()
+        self.config['BanList'] = self.BanList
+        self.config['Team'] = [CN_EN.get(btn.text()) if btn.text() else '' for btn in self.BtnList]
         with open('config.json', 'w', encoding='utf-8') as f:
             json.dump(self.config, f, ensure_ascii=False, indent=4)
 
-    def WriteLua(self):
+    def ReadLuaConfig(self):
+        self.Localization.setText(self.config.get('Localization')) if self.config.get('Localization') else None
+        self.Weak_Hero_Cap.setText(self.config.get('Weak_Hero_Cap')) if self.config.get('Weak_Hero_Cap') else None
+        self.Allow_Trash_Talk.setText(self.config.get('Allow_Trash_Talk')) if self.config.get('Allow_Trash_Talk') else None
+        self.Force_Group_Push_Level.setText(self.config.get('Force_Group_Push_Level')) if self.config.get('Force_Group_Push_Level') else None
+        self.Default_Difficulty.setText(self.config.get('Default_Difficulty')) if self.config.get('Default_Difficulty') else None
+        self.Default_Ally_Scale.setText(self.config.get('Default_Ally_Scale')) if self.config.get('Default_Ally_Scale') else None
+        self.BanList = self.config.get('BanList') if self.config.get('BanList') else []
+        self.Team = self.config.get('Team') if self.config.get('Team') else []
+        self.BanMod.setStringList([f'{en:50}{EN_CN[en]}' for en in self.BanList])
+        [Btn.setText(EN_CN.get(self.Team[i])) for i, Btn in enumerate(self.BtnList)] if self.Team else None
+
+    def ResetTeam(self):
+        [Btn.setText('') for Btn in self.BtnList]
+        self.status.setText(f'重置阵容')
+
+    def AddTeam(self, btn):
+        index = self.heroView.selectedIndexes()
+        if index:
+            cho = self.HeroMod.stringList()[index[0].row()].split(' ')[0]
+            btn.setText(EN_CN[cho])
+            self.status.setText(f'添加：{EN_CN[cho]}')
+        else:
+            self.status.setText('未选中')
+
+    def DoubleClickedHeroView(self, index):
+        cho = self.HeroMod.stringList()[index.row()].split(' ')[0]
+        if cho not in self.BanList:
+            self.BanList.append(cho)
+            self.BanMod.setStringList([f'{en:50}{EN_CN[en]}' for en in self.BanList])
+            self.status.setText(f'禁用：{EN_CN[cho]}')
+        else:
+            self.status.setText(f'已禁用：{EN_CN[cho]}')
+
+    def DoubleClickedBanView(self, index):
+        cho = self.BanMod.stringList()[index.row()].split(' ')[0]
+        if cho in self.BanList:
+            self.BanList.remove(cho)
+            self.BanMod.setStringList([f'{en:50}{EN_CN[en]}' for en in self.BanList])
+            self.status.setText(f'解禁：{EN_CN[cho]}')
+
+    def WriteLuaConfig(self):
         self.LUA.UndateOption('Customize.Localization', self.Localization.text())
         self.LUA.UndateOption('Customize.Weak_Hero_Cap', self.Weak_Hero_Cap.text())
         self.LUA.UndateOption('Customize.Allow_Trash_Talk', self.Allow_Trash_Talk.text())
         self.LUA.UndateOption('Customize.Force_Group_Push_Level', self.Force_Group_Push_Level.text())
         self.LUA.UndateOption('Default_Difficulty', self.Default_Difficulty.text())
         self.LUA.UndateOption('Default_Ally_Scale', self.Default_Ally_Scale.text())
-        self.LUA.UpdateBanHero(['BanHero1', 'BanHero2', 'BanHero3'])
-        self.LUA.UpdateFriend(['Friend1', 'Friend2', 'Friend3', 'Friend4'])
-        self.LUA.UpdateEnemy(['Enemy1', 'Enemy2', 'Enemy3', 'Enemy4', 'Enemy5'])
-        self.LUA.Write(r'C:\Users\Jeremy\Desktop\d3\general_2.lua')
+        self.LUA.UpdateBanHero([EN_FULL.get(en) for en in self.BanList])
+        self.LUA.UpdateFriend([CN_FULL.get(btn.text()) if btn.text() else 'Random' for btn in self.BtnList][:4])
+        self.LUA.UpdateEnemy([CN_FULL.get(btn.text()) if btn.text() else 'Random' for btn in self.BtnList][4:])
+        self.LUA.Write(self.lua_out)
         self.status.setText(f'阵容数据已写入')
 
     def UpdateItem(self):

@@ -33,9 +33,7 @@ Customize.Localization = "zh"
 -- Please note that it is not 100% guaranteed that the banned hero will not be picked; for example if you banned too many heroes 
 -- like near 100% of the heroes, bots will need to randomly pick heroes regardless of the ban list to continue the game.
 Customize.Ban = {
-	'BanHero1',
-	'BanHero2',
-	'BanHero3',
+	'npc_dota_hero_abaddon',
 }
 
 --[[
@@ -47,19 +45,19 @@ Customize.Ban = {
 6. Check Appendix to ensure you DO NOT pick more than 1 "weak" heroes in a team for your game experience.
 --]]
 Customize.Radiant_Heros = {
-	'Friend1',
-	'Friend2',
-	'Friend3',
-	'Friend4',
+	'Random',
+	'npc_dota_hero_axe',
+	'Random',
+	'Random',
 }
 
 -- Same notes as above for picking heroes but for the Dire side.
 Customize.Dire_Heros = {
-	'Enemy1',
-	'Enemy2',
-	'Enemy3',
-	'Enemy4',
-	'Enemy5',
+	'Random',
+	'Random',
+	'Random',
+	'Random',
+	'Random',
 }
 
 --[[

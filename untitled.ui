@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1037</width>
-    <height>507</height>
+    <width>1235</width>
+    <height>549</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -883,35 +883,35 @@
            </property>
            <layout class="QHBoxLayout" name="horizontalLayout_19">
             <item>
-             <widget class="QPushButton" name="pushButton_13">
+             <widget class="QPushButton" name="TeamReset">
               <property name="text">
                <string>重置</string>
               </property>
              </widget>
             </item>
             <item>
-             <widget class="QPushButton" name="pushButton_3">
+             <widget class="QPushButton" name="Friend1">
               <property name="text">
-               <string>2号位</string>
+               <string/>
               </property>
              </widget>
             </item>
             <item>
-             <widget class="QPushButton" name="pushButton_7">
+             <widget class="QPushButton" name="Friend2">
               <property name="text">
-               <string>3号位</string>
+               <string/>
               </property>
              </widget>
             </item>
             <item>
-             <widget class="QPushButton" name="pushButton_2">
+             <widget class="QPushButton" name="Friend3">
               <property name="text">
-               <string>4号位</string>
+               <string/>
               </property>
              </widget>
             </item>
             <item>
-             <widget class="QPushButton" name="pushButton">
+             <widget class="QPushButton" name="Friend4">
               <property name="minimumSize">
                <size>
                 <width>0</width>
@@ -919,7 +919,7 @@
                </size>
               </property>
               <property name="text">
-               <string>5号位</string>
+               <string/>
               </property>
              </widget>
             </item>
@@ -933,37 +933,37 @@
            </property>
            <layout class="QHBoxLayout" name="horizontalLayout_20">
             <item>
-             <widget class="QPushButton" name="pushButton_8">
+             <widget class="QPushButton" name="Enemy1">
               <property name="text">
-               <string>1号位</string>
+               <string/>
               </property>
              </widget>
             </item>
             <item>
-             <widget class="QPushButton" name="pushButton_9">
+             <widget class="QPushButton" name="Enemy2">
               <property name="text">
-               <string>2号位</string>
+               <string/>
               </property>
              </widget>
             </item>
             <item>
-             <widget class="QPushButton" name="pushButton_10">
+             <widget class="QPushButton" name="Enemy3">
               <property name="text">
-               <string>3号位</string>
+               <string/>
               </property>
              </widget>
             </item>
             <item>
-             <widget class="QPushButton" name="pushButton_11">
+             <widget class="QPushButton" name="Enemy4">
               <property name="text">
-               <string>4号位</string>
+               <string/>
               </property>
              </widget>
             </item>
             <item>
-             <widget class="QPushButton" name="pushButton_12">
+             <widget class="QPushButton" name="Enemy5">
               <property name="text">
-               <string>5号位</string>
+               <string/>
               </property>
              </widget>
             </item>

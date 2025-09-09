@@ -75,7 +75,7 @@ class GeneralLua:
 
 
 if __name__ == '__main__':
-    LUA = GeneralLua(r'C:\Users\Jeremy\Desktop\d3\general.lua')
+    LUA = GeneralLua(r'general.lua')
 
     LUA.UndateOption('Customize.Localization', '"zh"')
     LUA.UndateOption('Customize.Weak_Hero_Cap', '0')
@@ -88,4 +88,4 @@ if __name__ == '__main__':
     LUA.UpdateFriend(['Friend1', 'Friend2', 'Friend3', 'Friend4'])
     LUA.UpdateEnemy(['Enemy1', 'Enemy2', 'Enemy3', 'Enemy4', 'Enemy5'])
 
-    LUA.Write(r'C:\Users\Jeremy\Desktop\d3\general_2.lua')
+    LUA.Write(r'general_2.lua')
