@@ -133,9 +133,13 @@ EN_FILE = {k: 'npc_dota_hero_' + k + '.txt' for k, _ in EN_CN.items()}
 CN_EN = {v: k for k, v in EN_CN.items()}
 CN_FULL = {k: EN_FULL.get(v) for k, v in CN_EN.items()}
 FULL_CN = {v: k for k, v in CN_FULL.items()}
+FILE_EN = {v: k for k, v in EN_FILE.items()}
+FILE_CN = {k: EN_CN.get(v) for k, v in FILE_EN.items()}
 
 if __name__ == '__main__':
     print(EN_CN.get('zuus'))
     print(CN_EN.get('宙斯'))
     print(EN_FULL.get('zuus'))
     print(CN_FULL)
+    print(FILE_EN)
+    print(FILE_CN)

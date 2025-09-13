@@ -27,6 +27,7 @@ class MainWindow(QWidget, Ui_Form):
             self.config = {}
         self.Path = os.path.dirname(os.path.abspath(__file__))
         self.VpkBatPath = os.path.join(self.Path, 'vpk', 'vpk.bat')
+        self.VpkHeroPath = os.path.join(self.Path, 'vpk', 'pak01_dir', 'scripts', 'npc', 'heroes')
         self.NpcPath = os.path.join(self.Path, 'npc', 'heroes')
         self.NeutralItemsTxtPath = os.path.join(self.Path, 'npc', 'neutral_items.txt')
         self.NeutralItemsTxtPathOut = os.path.join(self.Path, 'vpk', 'pak01_dir', 'scripts', 'npc', 'neutral_items.txt')
@@ -42,7 +43,8 @@ class MainWindow(QWidget, Ui_Form):
         self.GeneralLua = GeneralLua(self.GeneralLuaPath)
         self.TeamHeroModel = QStringListModel()
         self.TeamBanModel = QStringListModel()
-        self.BrowseMod = QStringListModel()
+        self.BrowseModel = QStringListModel()
+        self.SelectModel = QStringListModel()
         self.GeneralLuaBanHeroList = []
         self.GeneralLuaTeamList = []
         self.Init()
@@ -100,8 +102,8 @@ class MainWindow(QWidget, Ui_Form):
         self.banView.setModel(self.TeamBanModel)
         self.banView.setEditTriggers(QListView.NoEditTriggers)  # 禁止编辑
         self.banView.doubleClicked.connect(self.DoubleClickedBanView)
-        self.BrowseMod.setStringList([f'{en:50}{cn}' for en, cn in EN_CN.items()])
-        self.BrowseView.setModel(self.BrowseMod)
+        self.BrowseModel.setStringList([f'{en:50}{cn}' for en, cn in EN_CN.items()])
+        self.BrowseView.setModel(self.BrowseModel)
         self.BrowseView.setEditTriggers(QListView.NoEditTriggers)  # 禁止编辑
         self.BrowseView.doubleClicked.connect(self.DoubleClickedBrowseView)
         self.BtnList = [self.Friend1, self.Friend2, self.Friend3, self.Friend4, self.Enemy1, self.Enemy2, self.Enemy3, self.Enemy4, self.Enemy5]
@@ -110,6 +112,10 @@ class MainWindow(QWidget, Ui_Form):
         self.TeamReset.clicked.connect(self.ResetTeam)
         self.luaRead.clicked.connect(self.ReadLuaConfig)
         self.luaOpen.clicked.connect(self.OpenGeneralLua)
+        self.SelectView.setModel(self.SelectModel)
+        self.SelectView.setEditTriggers(QListView.NoEditTriggers)  # 禁止编辑
+        # self.SelectView.doubleClicked.connect(self.DoubleClickedBrowseView)
+        self.UpdateSelectedModel()
 
     def closeEvent(self, event):
         self.config['GamePath'] = self.gamePath.text()
@@ -140,6 +146,9 @@ class MainWindow(QWidget, Ui_Form):
         self.config['Team'] = [CN_EN.get(btn.text()) if btn.text() else '' for btn in self.BtnList]
         with open('config.json', 'w', encoding='utf-8') as f:
             json.dump(self.config, f, ensure_ascii=False, indent=4)
+
+    def UpdateSelectedModel(self):
+        self.SelectModel.setStringList([f'{FILE_EN.get(f):20}{FILE_CN.get(f)}' for f in os.listdir(self.VpkHeroPath)])
 
     def OpenGeneralLua(self):
         if os.path.exists(self.GeneralLuaPathOut):
@@ -195,7 +204,7 @@ class MainWindow(QWidget, Ui_Form):
             self.status.setText('未选中')
 
     def DoubleClickedBrowseView(self, index):
-        cho = self.BrowseMod.stringList()[index.row()].split(' ')[0]
+        cho = self.BrowseModel.stringList()[index.row()].split(' ')[0]
         self.status.setText(f'添加：{EN_CN[cho]}')
 
     def DoubleClickedHeroView(self, index):
