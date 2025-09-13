@@ -117,13 +117,13 @@ Customize.Fretbots = {
     Default_Ally_Scale = 0,
 
     -- Set whether or not allowing the team to vote for difficulty. If false, will directly apply the default difficulty.
-    Allow_To_Vote = true,
+    Allow_To_Vote = false,
 
     -- Set to false disables all sounds from Fretbots mode
-    Play_Sounds = true,
+    Play_Sounds = false,
 
     -- Set to play chatwheel taunt sounds when human player died
-    Player_Death_Sound = true,
+    Player_Death_Sound = false,
 }
 
 -- Make bots think less, 0: fully think through, 1 to 10: think less and less frequently.

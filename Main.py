@@ -13,7 +13,7 @@ from GeneralLua import GeneralLua
 from HeroNameDict import *
 from untitled import Ui_Form
 
-version = '0.0.3'
+version = '0.0.4'
 
 
 class MainWindow(QWidget, Ui_Form):
@@ -102,6 +102,7 @@ class MainWindow(QWidget, Ui_Form):
         [Btn.setText(EN_CN.get(self.Team[i])) for i, Btn in enumerate(self.BtnList)] if self.Team else None
         self.TeamReset.clicked.connect(self.ResetTeam)
         self.luaRead.clicked.connect(self.ReadLuaConfig)
+        self.luaOpen.clicked.connect(self.OpenLuaConfig)
 
     def closeEvent(self, event):
         self.config['GamePath'] = self.gamePath.text()
@@ -125,10 +126,21 @@ class MainWindow(QWidget, Ui_Form):
         self.config['Force_Group_Push_Level'] = self.Force_Group_Push_Level.text()
         self.config['Default_Difficulty'] = self.Default_Difficulty.text()
         self.config['Default_Ally_Scale'] = self.Default_Ally_Scale.text()
+        self.config['Allow_To_Vote'] = self.Allow_To_Vote.text()
+        self.config['Play_Sounds'] = self.Play_Sounds.text()
+        self.config['Player_Death_Sound'] = self.Player_Death_Sound.text()
         self.config['BanList'] = self.BanList
         self.config['Team'] = [CN_EN.get(btn.text()) if btn.text() else '' for btn in self.BtnList]
         with open('config.json', 'w', encoding='utf-8') as f:
             json.dump(self.config, f, ensure_ascii=False, indent=4)
+
+    def OpenLuaConfig(self):
+        if os.path.exists(self.lua_out):
+            os.startfile(self.lua_out)
+            time.sleep(1)
+            self.status.setText('Lua配置已打开')
+        else:
+            self.status.setText('Lua配置未找到')
 
     def ReadLuaConfig(self):
         self.Localization.setText(self.config.get('Localization')) if self.config.get('Localization') else None
@@ -137,14 +149,18 @@ class MainWindow(QWidget, Ui_Form):
         self.Force_Group_Push_Level.setText(self.config.get('Force_Group_Push_Level')) if self.config.get('Force_Group_Push_Level') else None
         self.Default_Difficulty.setText(self.config.get('Default_Difficulty')) if self.config.get('Default_Difficulty') else None
         self.Default_Ally_Scale.setText(self.config.get('Default_Ally_Scale')) if self.config.get('Default_Ally_Scale') else None
+        self.Allow_To_Vote.setText(self.config.get('Allow_To_Vote')) if self.config.get('Allow_To_Vote') else None
+        self.Play_Sounds.setText(self.config.get('Play_Sounds')) if self.config.get('Play_Sounds') else None
+        self.Player_Death_Sound.setText(self.config.get('Player_Death_Sound')) if self.config.get('Player_Death_Sound') else None
         self.BanList = self.config.get('BanList') if self.config.get('BanList') else []
         self.Team = self.config.get('Team') if self.config.get('Team') else []
         self.BanMod.setStringList([f'{en:50}{EN_CN[en]}' for en in self.BanList])
         [Btn.setText(EN_CN.get(self.Team[i])) for i, Btn in enumerate(self.BtnList)] if self.Team else None
+        self.status.setText('Lua配置已读取')
 
     def ResetTeam(self):
         [Btn.setText('') for Btn in self.BtnList]
-        self.status.setText(f'重置阵容')
+        self.status.setText(f'阵容已重置')
 
     def AddTeam(self, btn):
         index = self.heroView.selectedIndexes()
@@ -172,17 +188,20 @@ class MainWindow(QWidget, Ui_Form):
             self.status.setText(f'解禁：{EN_CN[cho]}')
 
     def WriteLuaConfig(self):
-        self.LUA.UndateOption('Customize.Localization', self.Localization.text())
+        self.LUA.UndateOption('Customize.Localization', f'"{self.Localization.text()}"')
         self.LUA.UndateOption('Customize.Weak_Hero_Cap', self.Weak_Hero_Cap.text())
         self.LUA.UndateOption('Customize.Allow_Trash_Talk', self.Allow_Trash_Talk.text())
         self.LUA.UndateOption('Customize.Force_Group_Push_Level', self.Force_Group_Push_Level.text())
         self.LUA.UndateOption('Default_Difficulty', self.Default_Difficulty.text())
         self.LUA.UndateOption('Default_Ally_Scale', self.Default_Ally_Scale.text())
+        self.LUA.UndateOption('Allow_To_Vote', self.Allow_To_Vote.text())
+        self.LUA.UndateOption('Play_Sounds', self.Play_Sounds.text())
+        self.LUA.UndateOption('Player_Death_Sound', self.Player_Death_Sound.text())
         self.LUA.UpdateBanHero([EN_FULL.get(en) for en in self.BanList])
         self.LUA.UpdateFriend([CN_FULL.get(btn.text()) if btn.text() else 'Random' for btn in self.BtnList][:4])
         self.LUA.UpdateEnemy([CN_FULL.get(btn.text()) if btn.text() else 'Random' for btn in self.BtnList][4:])
         self.LUA.Write(self.lua_out)
-        self.status.setText(f'阵容数据已写入')
+        self.status.setText(f'Lua配置已写入')
 
     def UpdateItem(self):
         self.IT.UpdateItem('item_aghanims_shard', {"ItemInitialStockTime": self.shardCD.text()})

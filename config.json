@@ -21,7 +21,7 @@
     "eye2Max": "=8",
     "eye2Init": "=3",
     "eye2CD": "=70",
-    "Localization": "\"zh\"",
+    "Localization": "zh",
     "Weak_Hero_Cap": "0",
     "Allow_Trash_Talk": "false",
     "Force_Group_Push_Level": "3",
@@ -40,5 +40,8 @@
         "",
         "",
         ""
-    ]
+    ],
+    "Allow_To_Vote": "false",
+    "Play_Sounds": "false",
+    "Player_Death_Sound": "false"
 }

@@ -769,7 +769,7 @@
             <item>
              <widget class="QLineEdit" name="Localization">
               <property name="text">
-               <string>&quot;zh&quot;</string>
+               <string>zh</string>
               </property>
              </widget>
             </item>
@@ -866,6 +866,60 @@
              <widget class="QLineEdit" name="Default_Ally_Scale">
               <property name="text">
                <string>0</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <layout class="QHBoxLayout" name="horizontalLayout_25">
+            <item>
+             <widget class="QLabel" name="label_42">
+              <property name="text">
+               <string>投票</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLineEdit" name="Allow_To_Vote">
+              <property name="text">
+               <string>false</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <layout class="QHBoxLayout" name="horizontalLayout_26">
+            <item>
+             <widget class="QLabel" name="label_43">
+              <property name="text">
+               <string>音效</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLineEdit" name="Play_Sounds">
+              <property name="text">
+               <string>false</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <layout class="QHBoxLayout" name="horizontalLayout_27">
+            <item>
+             <widget class="QLabel" name="label_44">
+              <property name="text">
+               <string>死亡音效</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLineEdit" name="Player_Death_Sound">
+              <property name="text">
+               <string>false</string>
               </property>
              </widget>
             </item>
