@@ -25,26 +25,26 @@ class MainWindow(QWidget, Ui_Form):
                 self.config = json.load(f)
         else:
             self.config = {}
-        self.path = os.path.dirname(os.path.abspath(__file__))
-        self.vpk = os.path.join(self.path, 'vpk', 'vpk.bat')
-        self.heroes = os.path.join(self.path, 'npc', 'heroes')
-        self.ni = os.path.join(self.path, 'npc', 'neutral_items.txt')
-        self.ni_out = os.path.join(self.path, 'vpk', 'pak01_dir', 'scripts', 'npc', 'neutral_items.txt')
-        self.un = os.path.join(self.path, 'npc', 'npc_units.txt')
-        self.un_out = os.path.join(self.path, 'vpk', 'pak01_dir', 'scripts', 'npc', 'npc_units.txt')
-        self.it = os.path.join(self.path, 'npc', 'items.txt')
-        self.it_out = os.path.join(self.path, 'vpk', 'pak01_dir', 'scripts', 'npc', 'items.txt')
-        self.lua = os.path.join(self.path, 'general.lua')
-        self.lua_out = os.path.join(self.path, 'general_2.lua')
-        self.NI = NpcNeutralItem(self.ni)
-        self.UN = NpcUnit(self.un)
-        self.IT = NpcItem(self.it)
-        self.LUA = GeneralLua(self.lua)
-        self.HeroMod = QStringListModel()
-        self.BanMod = QStringListModel()
+        self.Path = os.path.dirname(os.path.abspath(__file__))
+        self.VpkBatPath = os.path.join(self.Path, 'vpk', 'vpk.bat')
+        self.NpcPath = os.path.join(self.Path, 'npc', 'heroes')
+        self.NeutralItemsTxtPath = os.path.join(self.Path, 'npc', 'neutral_items.txt')
+        self.NeutralItemsTxtPathOut = os.path.join(self.Path, 'vpk', 'pak01_dir', 'scripts', 'npc', 'neutral_items.txt')
+        self.NpcUnitsTxtPath = os.path.join(self.Path, 'npc', 'npc_units.txt')
+        self.NpcUnitsTxtPathOut = os.path.join(self.Path, 'vpk', 'pak01_dir', 'scripts', 'npc', 'npc_units.txt')
+        self.ItemsTxtPath = os.path.join(self.Path, 'npc', 'items.txt')
+        self.ItemsTxtPathOut = os.path.join(self.Path, 'vpk', 'pak01_dir', 'scripts', 'npc', 'items.txt')
+        self.GeneralLuaPath = os.path.join(self.Path, 'general.lua')
+        self.GeneralLuaPathOut = os.path.join(self.Path, 'general_2.lua')
+        self.NpcNeutralItem = NpcNeutralItem(self.NeutralItemsTxtPath)
+        self.NpcUnit = NpcUnit(self.NpcUnitsTxtPath)
+        self.NpcItem = NpcItem(self.ItemsTxtPath)
+        self.GeneralLua = GeneralLua(self.GeneralLuaPath)
+        self.TeamHeroModel = QStringListModel()
+        self.TeamBanModel = QStringListModel()
         self.BrowseMod = QStringListModel()
-        self.BanList = []
-        self.Team = []
+        self.GeneralLuaBanHeroList = []
+        self.GeneralLuaTeamList = []
         self.Init()
 
     def Init(self):
@@ -77,27 +77,27 @@ class MainWindow(QWidget, Ui_Form):
         self.Default_Ally_Scale.setText(self.config.get('Default_Ally_Scale')) if self.config.get('Default_Ally_Scale') else None
         self.Play_Sounds.setText(self.config.get('Play_Sounds')) if self.config.get('Play_Sounds') else None
         self.Player_Death_Sound.setText(self.config.get('Player_Death_Sound')) if self.config.get('Player_Death_Sound') else None
-        self.BanList = self.config.get('BanList') if self.config.get('BanList') else []
-        self.Team = self.config.get('Team') if self.config.get('Team') else []
+        self.GeneralLuaBanHeroList = self.config.get('BanList') if self.config.get('BanList') else []
+        self.GeneralLuaTeamList = self.config.get('Team') if self.config.get('Team') else []
         # 控件配置
         self.setWindowTitle('DOTA修改工具')
         self.status.setText(f'当前版本：{version}')
-        self.niApply.clicked.connect(self.UpdateNI)
-        self.niReset.clicked.connect(self.ResetNI)
-        self.save.clicked.connect(self.SaveConfig)
-        self.browse.clicked.connect(self.Browse)
-        self.unApply.clicked.connect(self.UpdateUn)
-        self.unReset.clicked.connect(self.ResetUn)
+        self.niApply.clicked.connect(self.UpdateNpcNeutralItem)
+        self.niReset.clicked.connect(self.ResetNpcNeutralItem)
+        self.save.clicked.connect(self.SaveGamePathConfig)
+        self.browse.clicked.connect(self.BrowseFileDir)
+        self.unApply.clicked.connect(self.UpdateNpcUnit)
+        self.unReset.clicked.connect(self.ResetNpcUnit)
         self.itApply.clicked.connect(self.UpdateItem)
         self.itReset.clicked.connect(self.ResetItem)
         self.luaWrite.clicked.connect(self.WriteLuaConfig)
         self.VPK.clicked.connect(self.Vpk)
-        self.HeroMod.setStringList([f'{en:50}{cn}' for en, cn in EN_CN.items()])
-        self.heroView.setModel(self.HeroMod)
+        self.TeamHeroModel.setStringList([f'{en:50}{cn}' for en, cn in EN_CN.items()])
+        self.heroView.setModel(self.TeamHeroModel)
         self.heroView.setEditTriggers(QListView.NoEditTriggers)  # 禁止编辑
         self.heroView.doubleClicked.connect(self.DoubleClickedHeroView)
-        self.BanMod.setStringList([f'{en:50}{EN_CN.get(en)}' for en in self.BanList])
-        self.banView.setModel(self.BanMod)
+        self.TeamBanModel.setStringList([f'{en:50}{EN_CN.get(en)}' for en in self.GeneralLuaBanHeroList])
+        self.banView.setModel(self.TeamBanModel)
         self.banView.setEditTriggers(QListView.NoEditTriggers)  # 禁止编辑
         self.banView.doubleClicked.connect(self.DoubleClickedBanView)
         self.BrowseMod.setStringList([f'{en:50}{cn}' for en, cn in EN_CN.items()])
@@ -106,10 +106,10 @@ class MainWindow(QWidget, Ui_Form):
         self.BrowseView.doubleClicked.connect(self.DoubleClickedBrowseView)
         self.BtnList = [self.Friend1, self.Friend2, self.Friend3, self.Friend4, self.Enemy1, self.Enemy2, self.Enemy3, self.Enemy4, self.Enemy5]
         [Btn.clicked.connect(lambda checked, btn=Btn: self.AddTeam(btn)) for Btn in self.BtnList]  # 这里会传两个参数，checked是布尔值参数（表示按钮是否被选中），b是按钮对象
-        [Btn.setText(EN_CN.get(self.Team[i])) for i, Btn in enumerate(self.BtnList)] if self.Team else None
+        [Btn.setText(EN_CN.get(self.GeneralLuaTeamList[i])) for i, Btn in enumerate(self.BtnList)] if self.GeneralLuaTeamList else None
         self.TeamReset.clicked.connect(self.ResetTeam)
         self.luaRead.clicked.connect(self.ReadLuaConfig)
-        self.luaOpen.clicked.connect(self.OpenLuaConfig)
+        self.luaOpen.clicked.connect(self.OpenGeneralLua)
 
     def closeEvent(self, event):
         self.config['GamePath'] = self.gamePath.text()
@@ -136,18 +136,18 @@ class MainWindow(QWidget, Ui_Form):
         self.config['Allow_To_Vote'] = self.Allow_To_Vote.text()
         self.config['Play_Sounds'] = self.Play_Sounds.text()
         self.config['Player_Death_Sound'] = self.Player_Death_Sound.text()
-        self.config['BanList'] = self.BanList
+        self.config['BanList'] = self.GeneralLuaBanHeroList
         self.config['Team'] = [CN_EN.get(btn.text()) if btn.text() else '' for btn in self.BtnList]
         with open('config.json', 'w', encoding='utf-8') as f:
             json.dump(self.config, f, ensure_ascii=False, indent=4)
 
-    def OpenLuaConfig(self):
-        if os.path.exists(self.lua_out):
-            os.startfile(self.lua_out)
+    def OpenGeneralLua(self):
+        if os.path.exists(self.GeneralLuaPathOut):
+            os.startfile(self.GeneralLuaPathOut)
             time.sleep(1)
-            self.status.setText('Lua配置已打开')
+            self.status.setText('general.lua已打开')
         else:
-            self.status.setText('Lua配置未找到')
+            self.status.setText('general.lua未找到')
 
     def ReadLuaConfig(self):
         self.Localization.setText(self.config.get('Localization')) if self.config.get('Localization') else None
@@ -159,11 +159,27 @@ class MainWindow(QWidget, Ui_Form):
         self.Allow_To_Vote.setText(self.config.get('Allow_To_Vote')) if self.config.get('Allow_To_Vote') else None
         self.Play_Sounds.setText(self.config.get('Play_Sounds')) if self.config.get('Play_Sounds') else None
         self.Player_Death_Sound.setText(self.config.get('Player_Death_Sound')) if self.config.get('Player_Death_Sound') else None
-        self.BanList = self.config.get('BanList') if self.config.get('BanList') else []
-        self.Team = self.config.get('Team') if self.config.get('Team') else []
-        self.BanMod.setStringList([f'{en:50}{EN_CN[en]}' for en in self.BanList])
-        [Btn.setText(EN_CN.get(self.Team[i])) for i, Btn in enumerate(self.BtnList)] if self.Team else None
+        self.GeneralLuaBanHeroList = self.config.get('BanList') if self.config.get('BanList') else []
+        self.GeneralLuaTeamList = self.config.get('Team') if self.config.get('Team') else []
+        self.TeamBanModel.setStringList([f'{en:50}{EN_CN[en]}' for en in self.GeneralLuaBanHeroList])
+        [Btn.setText(EN_CN.get(self.GeneralLuaTeamList[i])) for i, Btn in enumerate(self.BtnList)] if self.GeneralLuaTeamList else None
         self.status.setText('Lua配置已读取')
+
+    def WriteLuaConfig(self):
+        self.GeneralLua.UndateOption('Customize.Localization', f'"{self.Localization.text()}"')
+        self.GeneralLua.UndateOption('Customize.Weak_Hero_Cap', self.Weak_Hero_Cap.text())
+        self.GeneralLua.UndateOption('Customize.Allow_Trash_Talk', self.Allow_Trash_Talk.text())
+        self.GeneralLua.UndateOption('Customize.Force_Group_Push_Level', self.Force_Group_Push_Level.text())
+        self.GeneralLua.UndateOption('Default_Difficulty', self.Default_Difficulty.text())
+        self.GeneralLua.UndateOption('Default_Ally_Scale', self.Default_Ally_Scale.text())
+        self.GeneralLua.UndateOption('Allow_To_Vote', self.Allow_To_Vote.text())
+        self.GeneralLua.UndateOption('Play_Sounds', self.Play_Sounds.text())
+        self.GeneralLua.UndateOption('Player_Death_Sound', self.Player_Death_Sound.text())
+        self.GeneralLua.UpdateBanHero([EN_FULL.get(en) for en in self.GeneralLuaBanHeroList])
+        self.GeneralLua.UpdateFriend([CN_FULL.get(btn.text()) if btn.text() else 'Random' for btn in self.BtnList][:4])
+        self.GeneralLua.UpdateEnemy([CN_FULL.get(btn.text()) if btn.text() else 'Random' for btn in self.BtnList][4:])
+        self.GeneralLua.Write(self.GeneralLuaPathOut)
+        self.status.setText(f'Lua配置已写入')
 
     def ResetTeam(self):
         [Btn.setText('') for Btn in self.BtnList]
@@ -172,7 +188,7 @@ class MainWindow(QWidget, Ui_Form):
     def AddTeam(self, btn):
         index = self.heroView.selectedIndexes()
         if index:
-            cho = self.HeroMod.stringList()[index[0].row()].split(' ')[0]
+            cho = self.TeamHeroModel.stringList()[index[0].row()].split(' ')[0]
             btn.setText(EN_CN[cho])
             self.status.setText(f'添加：{EN_CN[cho]}')
         else:
@@ -183,88 +199,72 @@ class MainWindow(QWidget, Ui_Form):
         self.status.setText(f'添加：{EN_CN[cho]}')
 
     def DoubleClickedHeroView(self, index):
-        cho = self.HeroMod.stringList()[index.row()].split(' ')[0]
-        if cho not in self.BanList:
-            self.BanList.append(cho)
-            self.BanMod.setStringList([f'{en:50}{EN_CN[en]}' for en in self.BanList])
+        cho = self.TeamHeroModel.stringList()[index.row()].split(' ')[0]
+        if cho not in self.GeneralLuaBanHeroList:
+            self.GeneralLuaBanHeroList.append(cho)
+            self.TeamBanModel.setStringList([f'{en:50}{EN_CN[en]}' for en in self.GeneralLuaBanHeroList])
             self.status.setText(f'禁用：{EN_CN[cho]}')
         else:
             self.status.setText(f'已禁用：{EN_CN[cho]}')
 
     def DoubleClickedBanView(self, index):
-        cho = self.BanMod.stringList()[index.row()].split(' ')[0]
-        if cho in self.BanList:
-            self.BanList.remove(cho)
-            self.BanMod.setStringList([f'{en:50}{EN_CN[en]}' for en in self.BanList])
+        cho = self.TeamBanModel.stringList()[index.row()].split(' ')[0]
+        if cho in self.GeneralLuaBanHeroList:
+            self.GeneralLuaBanHeroList.remove(cho)
+            self.TeamBanModel.setStringList([f'{en:50}{EN_CN[en]}' for en in self.GeneralLuaBanHeroList])
             self.status.setText(f'解禁：{EN_CN[cho]}')
 
-    def WriteLuaConfig(self):
-        self.LUA.UndateOption('Customize.Localization', f'"{self.Localization.text()}"')
-        self.LUA.UndateOption('Customize.Weak_Hero_Cap', self.Weak_Hero_Cap.text())
-        self.LUA.UndateOption('Customize.Allow_Trash_Talk', self.Allow_Trash_Talk.text())
-        self.LUA.UndateOption('Customize.Force_Group_Push_Level', self.Force_Group_Push_Level.text())
-        self.LUA.UndateOption('Default_Difficulty', self.Default_Difficulty.text())
-        self.LUA.UndateOption('Default_Ally_Scale', self.Default_Ally_Scale.text())
-        self.LUA.UndateOption('Allow_To_Vote', self.Allow_To_Vote.text())
-        self.LUA.UndateOption('Play_Sounds', self.Play_Sounds.text())
-        self.LUA.UndateOption('Player_Death_Sound', self.Player_Death_Sound.text())
-        self.LUA.UpdateBanHero([EN_FULL.get(en) for en in self.BanList])
-        self.LUA.UpdateFriend([CN_FULL.get(btn.text()) if btn.text() else 'Random' for btn in self.BtnList][:4])
-        self.LUA.UpdateEnemy([CN_FULL.get(btn.text()) if btn.text() else 'Random' for btn in self.BtnList][4:])
-        self.LUA.Write(self.lua_out)
-        self.status.setText(f'Lua配置已写入')
-
     def UpdateItem(self):
-        self.IT.UpdateItem('item_aghanims_shard', {"ItemInitialStockTime": self.shardCD.text()})
-        self.IT.UpdateItem('item_ward_observer', {"ItemStockMax": self.eyeMax.text(), "ItemStockInitial": self.eyeInit.text(), "ItemStockTime": self.eyeCD.text()})
-        self.IT.UpdateItem('item_ward_sentry', {"ItemStockMax": self.eye2Max.text(), "ItemStockInitial": self.eye2Init.text(), "ItemStockTime": self.eye2CD.text()})
+        self.NpcItem.UpdateItem('item_aghanims_shard', {"ItemInitialStockTime": self.shardCD.text()})
+        self.NpcItem.UpdateItem('item_ward_observer', {"ItemStockMax": self.eyeMax.text(), "ItemStockInitial": self.eyeInit.text(), "ItemStockTime": self.eyeCD.text()})
+        self.NpcItem.UpdateItem('item_ward_sentry', {"ItemStockMax": self.eye2Max.text(), "ItemStockInitial": self.eye2Init.text(), "ItemStockTime": self.eye2CD.text()})
         self.status.setText(f'物品数据已更新')
 
     def ResetItem(self):
-        self.IT.Reset()
+        self.NpcItem.Reset()
         self.status.setText(f'物品数据已重置')
 
     def Vpk(self):
-        self.UN.Write(self.un_out)
-        self.NI.Write(self.ni_out)
-        self.IT.Write(self.it_out)
+        self.NpcUnit.Write(self.NpcUnitsTxtPathOut)
+        self.NpcNeutralItem.Write(self.NeutralItemsTxtPathOut)
+        self.NpcItem.Write(self.ItemsTxtPathOut)
         time.sleep(1)
-        subprocess.run(self.vpk, shell=True)
+        subprocess.run(self.VpkBatPath, shell=True)
         self.status.setText(f'数据已写入VPK')
 
-    def UpdateUn(self):
-        self.UN.UpdateXP(self.unXP.text())
-        self.UN.UpdateGold(self.unGold.text())
-        self.UN.UpdateTowerHpAndRegen(self.unTowerHp.text(), self.unTowerRegen.text())
-        self.UN.UpdateFortHpAndRegen(self.unFortHp.text(), self.unFortRegen.text())
+    def UpdateNpcUnit(self):
+        self.NpcUnit.UpdateXP(self.unXP.text())
+        self.NpcUnit.UpdateGold(self.unGold.text())
+        self.NpcUnit.UpdateTowerHpAndRegen(self.unTowerHp.text(), self.unTowerRegen.text())
+        self.NpcUnit.UpdateFortHpAndRegen(self.unFortHp.text(), self.unFortRegen.text())
         self.status.setText(f'单位数据已更新')
 
-    def ResetUn(self):
-        self.UN.Reset()
+    def ResetNpcUnit(self):
+        self.NpcUnit.Reset()
         self.status.setText(f'单位数据已重置')
 
-    def UpdateNI(self):
+    def UpdateNpcNeutralItem(self):
         times = [self.ni6.text(),
                  self.ni1.text(),
                  self.ni2.text(),
                  self.ni3.text(),
                  self.ni4.text(),
                  self.ni5.text()]
-        self.NI.UpdateNeutralItem(times)
+        self.NpcNeutralItem.UpdateNeutralItem(times)
         self.status.setText(f'中立物品数据已更新')
 
-    def ResetNI(self):
-        self.NI.Reset()
-        self.NI.Write(self.ni_out)
+    def ResetNpcNeutralItem(self):
+        self.NpcNeutralItem.Reset()
+        self.NpcNeutralItem.Write(self.NeutralItemsTxtPathOut)
         self.status.setText(f'中立物品数据已重置')
 
-    def SaveConfig(self):
+    def SaveGamePathConfig(self):
         self.config['GamePath'] = self.gamePath.text()
         with open('config.json', 'w', encoding='utf-8') as f:
             json.dump(self.config, f, ensure_ascii=False, indent=4)
         self.status.setText(f'路径已保存')
 
-    def Browse(self):
+    def BrowseFileDir(self):
         path = QFileDialog.getExistingDirectory(self, "选择文件夹", "")
         if path:
             self.gamePath.setText(os.path.abspath(path))
