@@ -16,11 +16,14 @@
   <property name="styleSheet">
    <string notr="true">font: 9pt &quot;JetBrains Mono&quot;;</string>
   </property>
-  <layout class="QVBoxLayout" name="verticalLayout">
-   <item>
+  <layout class="QGridLayout" name="gridLayout_3">
+   <item row="0" column="0" colspan="2">
     <widget class="QTabWidget" name="tabWidget">
+     <property name="toolTip">
+      <string/>
+     </property>
      <property name="currentIndex">
-      <number>1</number>
+      <number>2</number>
      </property>
      <widget class="QWidget" name="tab">
       <attribute name="title">
@@ -768,6 +771,9 @@
             </item>
             <item>
              <widget class="QLineEdit" name="Localization">
+              <property name="toolTip">
+               <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-family:'PingFang SC,Arial,Hiragino Sans GB,STHeiti,Microsoft YaHei,WenQuanYi Micro Hei,sans-serif'; font-size:8pt; color:#000000;&quot;&gt;--设置本地化代码，使机器人在可能的情况下说特定的语言（不保证100%本地化）&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-family:'PingFang SC,Arial,Hiragino Sans GB,STHeiti,Microsoft YaHei,WenQuanYi Micro Hei,sans-serif'; font-size:8pt; color:#000000;&quot;&gt;--目前支持：“en”表示“英语”，“zh”表示“中文”，“ru”表示俄语，“ja”表示日语&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+              </property>
               <property name="text">
                <string>zh</string>
               </property>
@@ -786,6 +792,9 @@
             </item>
             <item>
              <widget class="QLineEdit" name="Weak_Hero_Cap">
+              <property name="toolTip">
+               <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-family:'PingFang SC,Arial,Hiragino Sans GB,STHeiti,Microsoft YaHei,WenQuanYi Micro Hei,sans-serif'; font-size:8pt; color:#000000; background-color:#ffffff;&quot;&gt;--机器人可以选择的团队中允许的弱英雄的最大数量&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+              </property>
               <property name="text">
                <string>0</string>
               </property>
@@ -804,6 +813,9 @@
             </item>
             <item>
              <widget class="QLineEdit" name="Allow_Trash_Talk">
+              <property name="toolTip">
+               <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-family:'PingFang SC,Arial,Hiragino Sans GB,STHeiti,Microsoft YaHei,WenQuanYi Micro Hei,sans-serif'; font-size:8pt; color:#000000; background-color:#ffffff;&quot;&gt;--允许机器人在不同的场景下做垃圾话：得到脸书、杀死一个人等。禁用此选项也会禁用GPT聊天&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+              </property>
               <property name="text">
                <string>false</string>
               </property>
@@ -822,6 +834,9 @@
             </item>
             <item>
              <widget class="QLineEdit" name="Force_Group_Push_Level">
+              <property name="toolTip">
+               <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-family:'PingFang SC,Arial,Hiragino Sans GB,STHeiti,Microsoft YaHei,WenQuanYi Micro Hei,sans-serif'; font-size:8pt; color:#000000;&quot;&gt;--机器人将分组并推进同一车道的欲望水平&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-family:'PingFang SC,Arial,Hiragino Sans GB,STHeiti,Microsoft YaHei,WenQuanYi Micro Hei,sans-serif'; font-size:8pt; color:#000000;&quot;&gt;--1是温和的意思，机器人只会在方便的时候分组；3是机器人几乎总是试图挤在一起&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-family:'PingFang SC,Arial,Hiragino Sans GB,STHeiti,Microsoft YaHei,WenQuanYi Micro Hei,sans-serif'; font-size:8pt; color:#000000;&quot;&gt;--团体推搡可能会增加难度，但会降低游戏体验&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+              </property>
               <property name="text">
                <string>3</string>
               </property>
@@ -840,6 +855,12 @@
             </item>
             <item>
              <widget class="QLineEdit" name="Default_Difficulty">
+              <property name="toolTip">
+               <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-family:'PingFang SC,Arial,Hiragino Sans GB,STHeiti,Microsoft YaHei,WenQuanYi Micro Hei,sans-serif'; font-size:8pt; color:#000000; background-color:#ffffff;&quot;&gt;--默认难度，介于[0,10]之间的数字&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+              </property>
+              <property name="statusTip">
+               <string/>
+              </property>
               <property name="text">
                <string>10</string>
               </property>
@@ -864,6 +885,9 @@
             </item>
             <item>
              <widget class="QLineEdit" name="Default_Ally_Scale">
+              <property name="toolTip">
+               <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-family:'PingFang SC,Arial,Hiragino Sans GB,STHeiti,Microsoft YaHei,WenQuanYi Micro Hei,sans-serif'; font-size:8pt; color:#000000; background-color:#ffffff;&quot;&gt;--默认盟友机器人与敌方机器人的奖金比例，介于[0,1]之间的数字&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+              </property>
               <property name="text">
                <string>0</string>
               </property>
@@ -882,6 +906,9 @@
             </item>
             <item>
              <widget class="QLineEdit" name="Allow_To_Vote">
+              <property name="toolTip">
+               <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-family:'PingFang SC,Arial,Hiragino Sans GB,STHeiti,Microsoft YaHei,WenQuanYi Micro Hei,sans-serif'; font-size:8pt; color:#000000; background-color:#ffffff;&quot;&gt;--设置是否允许团队为难度投票。如果为false，将直接应用默认难度&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+              </property>
               <property name="text">
                <string>false</string>
               </property>
@@ -900,6 +927,9 @@
             </item>
             <item>
              <widget class="QLineEdit" name="Play_Sounds">
+              <property name="toolTip">
+               <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-family:'PingFang SC,Arial,Hiragino Sans GB,STHeiti,Microsoft YaHei,WenQuanYi Micro Hei,sans-serif'; font-size:8pt; color:#000000; background-color:#ffffff;&quot;&gt;--设置为false将禁用Fretbots模式的所有声音&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+              </property>
               <property name="text">
                <string>false</string>
               </property>
@@ -918,6 +948,9 @@
             </item>
             <item>
              <widget class="QLineEdit" name="Player_Death_Sound">
+              <property name="toolTip">
+               <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-family:'PingFang SC,Arial,Hiragino Sans GB,STHeiti,Microsoft YaHei,WenQuanYi Micro Hei,sans-serif'; font-size:8pt; color:#000000; background-color:#ffffff;&quot;&gt;--设置为在人类玩家死亡时播放聊天轮嘲讽声音&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+              </property>
               <property name="text">
                <string>false</string>
               </property>
@@ -1076,6 +1109,174 @@
        </item>
       </layout>
      </widget>
+     <widget class="QWidget" name="tab_4">
+      <attribute name="title">
+       <string>英雄</string>
+      </attribute>
+      <layout class="QHBoxLayout" name="horizontalLayout_29">
+       <item>
+        <widget class="QGroupBox" name="groupBox_21">
+         <property name="title">
+          <string>浏览</string>
+         </property>
+         <layout class="QVBoxLayout" name="verticalLayout_9">
+          <item>
+           <widget class="QListView" name="BrowseView"/>
+          </item>
+          <item>
+           <widget class="QLineEdit" name="SearchForBrowseView">
+            <property name="text">
+             <string/>
+            </property>
+            <property name="placeholderText">
+             <string>搜索</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item>
+        <layout class="QVBoxLayout" name="verticalLayout_10">
+         <item>
+          <widget class="QGroupBox" name="groupBox_22">
+           <property name="title">
+            <string>操作台</string>
+           </property>
+           <layout class="QGridLayout" name="gridLayout_2">
+            <item row="0" column="1">
+             <widget class="QPushButton" name="MoveInBackup">
+              <property name="minimumSize">
+               <size>
+                <width>0</width>
+                <height>35</height>
+               </size>
+              </property>
+              <property name="text">
+               <string>备选</string>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="3">
+             <widget class="QPushButton" name="Delete">
+              <property name="minimumSize">
+               <size>
+                <width>0</width>
+                <height>35</height>
+               </size>
+              </property>
+              <property name="text">
+               <string>删除</string>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="2">
+             <widget class="QPushButton" name="MoveOutBackup">
+              <property name="minimumSize">
+               <size>
+                <width>0</width>
+                <height>35</height>
+               </size>
+              </property>
+              <property name="text">
+               <string>移除备选</string>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="0">
+             <widget class="QPushButton" name="GotoEdit">
+              <property name="minimumSize">
+               <size>
+                <width>0</width>
+                <height>35</height>
+               </size>
+              </property>
+              <property name="text">
+               <string>进入编辑</string>
+              </property>
+             </widget>
+            </item>
+            <item row="2" column="0" colspan="2">
+             <widget class="QPushButton" name="SyncBanView">
+              <property name="minimumSize">
+               <size>
+                <width>0</width>
+                <height>35</height>
+               </size>
+              </property>
+              <property name="text">
+               <string>同步至阵容禁用</string>
+              </property>
+             </widget>
+            </item>
+            <item row="2" column="2" colspan="2">
+             <widget class="QPushButton" name="OpenHeroDir">
+              <property name="minimumSize">
+               <size>
+                <width>0</width>
+                <height>35</height>
+               </size>
+              </property>
+              <property name="text">
+               <string>打开英雄文件夹</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </widget>
+         </item>
+         <item>
+          <layout class="QHBoxLayout" name="horizontalLayout_24">
+           <item>
+            <widget class="QGroupBox" name="groupBox_19">
+             <property name="title">
+              <string>选择</string>
+             </property>
+             <layout class="QVBoxLayout" name="verticalLayout_6">
+              <item>
+               <widget class="QListView" name="SelectView"/>
+              </item>
+              <item>
+               <widget class="QLineEdit" name="SearchForSelectView">
+                <property name="text">
+                 <string/>
+                </property>
+                <property name="placeholderText">
+                 <string>搜索</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </widget>
+           </item>
+           <item>
+            <widget class="QGroupBox" name="groupBox_20">
+             <property name="title">
+              <string>备选</string>
+             </property>
+             <layout class="QVBoxLayout" name="verticalLayout_8">
+              <item>
+               <widget class="QListView" name="BackupView"/>
+              </item>
+              <item>
+               <widget class="QLineEdit" name="SearchForBackupView">
+                <property name="text">
+                 <string/>
+                </property>
+                <property name="placeholderText">
+                 <string>搜索</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </widget>
+           </item>
+          </layout>
+         </item>
+        </layout>
+       </item>
+      </layout>
+     </widget>
      <widget class="QWidget" name="tab_2">
       <attribute name="title">
        <string>配置</string>
@@ -1128,7 +1329,17 @@
      </widget>
     </widget>
    </item>
-   <item>
+   <item row="2" column="0">
+    <widget class="QLabel" name="status">
+     <property name="text">
+      <string>状态信息</string>
+     </property>
+     <property name="openExternalLinks">
+      <bool>true</bool>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="0" colspan="2">
     <widget class="QPushButton" name="VPK">
      <property name="minimumSize">
       <size>
@@ -1138,16 +1349,6 @@
      </property>
      <property name="text">
       <string>写入VPK</string>
-     </property>
-    </widget>
-   </item>
-   <item>
-    <widget class="QLabel" name="status">
-     <property name="text">
-      <string>状态信息</string>
-     </property>
-     <property name="openExternalLinks">
-      <bool>true</bool>
      </property>
     </widget>
    </item>

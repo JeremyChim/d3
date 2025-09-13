@@ -94,6 +94,8 @@ class MainWindow(QWidget, Ui_Form):
         self.HeroMod.setStringList([f'{en:50}{cn}' for en, cn in EN_CN.items()])
         self.heroView.setModel(self.HeroMod)
         self.heroView.setEditTriggers(QListView.NoEditTriggers)  # 禁止编辑
+        self.BrowseView.setModel(self.HeroMod)
+        self.BrowseView.setEditTriggers(QListView.NoEditTriggers)  # 禁止编辑
         self.BanMod.setStringList([f'{en:50}{EN_CN.get(en)}' for en in self.BanList])
         self.banView.setModel(self.BanMod)
         self.banView.setEditTriggers(QListView.NoEditTriggers)  # 禁止编辑
