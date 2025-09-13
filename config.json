@@ -14,7 +14,7 @@
     "unTowerRegen": "*1",
     "unFortHp": "*1",
     "unFortRegen": "*1",
-    "shardCD": "=990.0",
+    "shardCD": "=0.0",
     "eyeMax": "=4",
     "eyeInit": "=2",
     "eyeCD": "=135.0",
