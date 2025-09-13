@@ -6093,7 +6093,7 @@
 		"ItemStockTime"					"1"			  
 		"ItemStockInitial"				"0"
 		"ItemStockMax"					"1"
-		"ItemInitialStockTime"			"0.0"
+		"ItemInitialStockTime"			"990.0"
 		"ItemInitialStockTimeTurbo"		"510.0"
 
 		"SuggestLategame"				"1"

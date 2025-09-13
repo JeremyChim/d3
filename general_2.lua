@@ -33,7 +33,6 @@ Customize.Localization = "zh"
 -- Please note that it is not 100% guaranteed that the banned hero will not be picked; for example if you banned too many heroes 
 -- like near 100% of the heroes, bots will need to randomly pick heroes regardless of the ban list to continue the game.
 Customize.Ban = {
-	'npc_dota_hero_abaddon',
 }
 
 --[[
