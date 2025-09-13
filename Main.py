@@ -42,6 +42,7 @@ class MainWindow(QWidget, Ui_Form):
         self.LUA = GeneralLua(self.lua)
         self.HeroMod = QStringListModel()
         self.BanMod = QStringListModel()
+        self.BrowseMod = QStringListModel()
         self.BanList = []
         self.Team = []
         self.Init()
@@ -74,6 +75,8 @@ class MainWindow(QWidget, Ui_Form):
         self.Force_Group_Push_Level.setText(self.config.get('Force_Group_Push_Level')) if self.config.get('Force_Group_Push_Level') else None
         self.Default_Difficulty.setText(self.config.get('Default_Difficulty')) if self.config.get('Default_Difficulty') else None
         self.Default_Ally_Scale.setText(self.config.get('Default_Ally_Scale')) if self.config.get('Default_Ally_Scale') else None
+        self.Play_Sounds.setText(self.config.get('Play_Sounds')) if self.config.get('Play_Sounds') else None
+        self.Player_Death_Sound.setText(self.config.get('Player_Death_Sound')) if self.config.get('Player_Death_Sound') else None
         self.BanList = self.config.get('BanList') if self.config.get('BanList') else []
         self.Team = self.config.get('Team') if self.config.get('Team') else []
         # 控件配置
@@ -89,16 +92,18 @@ class MainWindow(QWidget, Ui_Form):
         self.itReset.clicked.connect(self.ResetItem)
         self.luaWrite.clicked.connect(self.WriteLuaConfig)
         self.VPK.clicked.connect(self.Vpk)
-        self.heroView.doubleClicked.connect(self.DoubleClickedHeroView)
-        self.banView.doubleClicked.connect(self.DoubleClickedBanView)
         self.HeroMod.setStringList([f'{en:50}{cn}' for en, cn in EN_CN.items()])
         self.heroView.setModel(self.HeroMod)
         self.heroView.setEditTriggers(QListView.NoEditTriggers)  # 禁止编辑
-        self.BrowseView.setModel(self.HeroMod)
-        self.BrowseView.setEditTriggers(QListView.NoEditTriggers)  # 禁止编辑
+        self.heroView.doubleClicked.connect(self.DoubleClickedHeroView)
         self.BanMod.setStringList([f'{en:50}{EN_CN.get(en)}' for en in self.BanList])
         self.banView.setModel(self.BanMod)
         self.banView.setEditTriggers(QListView.NoEditTriggers)  # 禁止编辑
+        self.banView.doubleClicked.connect(self.DoubleClickedBanView)
+        self.BrowseMod.setStringList([f'{en:50}{cn}' for en, cn in EN_CN.items()])
+        self.BrowseView.setModel(self.BrowseMod)
+        self.BrowseView.setEditTriggers(QListView.NoEditTriggers)  # 禁止编辑
+        self.BrowseView.doubleClicked.connect(self.DoubleClickedBrowseView)
         self.BtnList = [self.Friend1, self.Friend2, self.Friend3, self.Friend4, self.Enemy1, self.Enemy2, self.Enemy3, self.Enemy4, self.Enemy5]
         [Btn.clicked.connect(lambda checked, btn=Btn: self.AddTeam(btn)) for Btn in self.BtnList]  # 这里会传两个参数，checked是布尔值参数（表示按钮是否被选中），b是按钮对象
         [Btn.setText(EN_CN.get(self.Team[i])) for i, Btn in enumerate(self.BtnList)] if self.Team else None
@@ -172,6 +177,10 @@ class MainWindow(QWidget, Ui_Form):
             self.status.setText(f'添加：{EN_CN[cho]}')
         else:
             self.status.setText('未选中')
+
+    def DoubleClickedBrowseView(self, index):
+        cho = self.BrowseMod.stringList()[index.row()].split(' ')[0]
+        self.status.setText(f'添加：{EN_CN[cho]}')
 
     def DoubleClickedHeroView(self, index):
         cho = self.HeroMod.stringList()[index.row()].split(' ')[0]
